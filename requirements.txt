@@ -3,4 +3,5 @@ psycopg2-binary
 sqlmodel
 python-dotenv
 cloudinary
+python-multipart
 uvicorn[standar]
