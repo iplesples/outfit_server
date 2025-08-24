@@ -16,3 +16,4 @@ pyproject.toml
 uv.lock
 .python-version
 tests/
+init_db.py

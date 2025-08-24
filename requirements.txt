@@ -2,4 +2,5 @@ fastapi
 psycopg2-binary
 sqlmodel
 python-dotenv
+cloudinary
 uvicorn[standar]

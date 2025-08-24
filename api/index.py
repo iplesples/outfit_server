@@ -4,7 +4,9 @@ from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.core.settings import db_setting
-from src.routes.items_route import item_router
+from src.routes.catalog_route import router as catalog_router
+from src.routes.product_router import router as product_router
+from src.routes.item_router import router as item_router
 
 
 #setup database
@@ -19,7 +21,7 @@ app = FastAPI(
     title="Outfit Server",
     description="Backend untuk Outfit",
     version="1.0.0",
-    #lifespan=lifespan
+    lifespan=lifespan
 )
 
 # CORS middleware
@@ -43,4 +45,6 @@ async def root():
         html_content = f.read()
     return HTMLResponse(content=html_content)
 
+app.include_router(catalog_router)
+app.include_router(product_router)
 app.include_router(item_router)

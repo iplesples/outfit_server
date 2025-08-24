@@ -2,7 +2,7 @@
 
 from config.database import engine
 from sqlmodel import SQLModel
-from src.models.item_model import Item
+
 
 
 # Fungsi untuk membuat tabel di database
