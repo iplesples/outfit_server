@@ -1,20 +1,25 @@
 import os
-from sqlmodel import create_engine, Session
+from sqlmodel import SQLModel, create_engine, Session
 from dotenv import load_dotenv
-from typing import Generator
 
-if os.getenv("VERCEL") != "1":
+
+# hanya load dotenv kalau ada file .env (untuk local)
+if os.path.exists(".env"):
     load_dotenv()
 
-DB_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-if not DB_URL:
-    raise ValueError("DB_URL database tidak ditemukan")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL tidak ditemukan di environment!")
 
-# engine untuk koneksi ke PostgreSQL
-engine = create_engine(DB_URL, echo=True)
+# buat engine
+engine = create_engine(DATABASE_URL, echo=True)
 
-# fungsi untuk mendapatkan sesi database
-def get_session() -> Generator:
+# dependency untuk FastAPI
+def get_session():
     with Session(engine) as session:
         yield session
+
+# optional: inisialisasi tabel di local (bukan di production vercel!)
+def init_db():
+    SQLModel.metadata.create_all(engine)
