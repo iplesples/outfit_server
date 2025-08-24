@@ -9,7 +9,7 @@ def create_new_item(db: Session, item: Item):
     return item
 
 def get_all_items(db: Session) -> List[Item]:
-    items = db.exec(select(Item).all())
+    items = db.exec(select(Item)).all()
     return items
 
 def get_item_by_id(db: Session, item_id: int) -> Optional[Item]:

@@ -1,15 +1,25 @@
 import os
 from fastapi import FastAPI
 #from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse
 from src.core.settings import db_setting
 from src.routes.items_route import item_router
+#setup database
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    db_setting()
+    yield
+    # Shutdown (jika ada cleanup)
+    print("App shutdown...")
 
 # Inisialisasi FastAPI app
 app = FastAPI(
     title="Outfit Server",
     description="Backend untuk Outfit",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan
 )
 
 # CORS middleware
@@ -23,10 +33,6 @@ app = FastAPI(
 #    allow_headers=["*"],
 #)
 
-#setup database
-@app.on_event("startup")
-def on_startup():
-    db_setting()
 
 
 @app.get("/", response_class=HTMLResponse)
