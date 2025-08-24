@@ -1,19 +1,18 @@
 import os
 from fastapi import FastAPI
-#from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
-#from src.core.settings import db_setting
-#from src.routes.items_route import item_router
+from src.core.settings import db_setting
+from src.routes.items_route import item_router
 
 
 #setup database
-#@asynccontextmanager
-#async def lifespan(app: FastAPI):
-
-#    db_setting()
-#    yield
-#    print("App shutdown...")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    db_setting()
+    yield
+    print("App shutdown...")
 
 # Inisialisasi FastAPI app
 app = FastAPI(
@@ -44,4 +43,4 @@ async def root():
         html_content = f.read()
     return HTMLResponse(content=html_content)
 
-#app.include_router(item_router)
+app.include_router(item_router)
