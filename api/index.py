@@ -2,6 +2,7 @@ import os
 from fastapi import FastAPI
 #from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 #from src.core.settings import db_setting
 #from src.routes.items_route import item_router
 
@@ -25,13 +26,13 @@ app = FastAPI(
 # CORS middleware
 
 
-#app.add_middleware(
-#    CORSMiddleware,
-#    allow_origins=["*"],
-#    allow_credentials=True,
-#    allow_methods=["*"],
-#    allow_headers=["*"],
-#)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 
